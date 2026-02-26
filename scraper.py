@@ -54,9 +54,8 @@ def scrape_tutte():
     return tutti
 
 if __name__ == "__main__":
+    from database import init_db, salva_notizie
+    init_db()
     notizie = scrape_tutte()
+    salva_notizie(notizie)
     print(f"\nTotale articoli raccolti: {len(notizie)}")
-    for n in notizie[:3]:
-        print(f"\n[{n['paese']}] {n['data']}")
-        print(f"  {n['titolo']}")
-        print(f"  {n['link']}")
