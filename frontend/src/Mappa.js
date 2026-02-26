@@ -16,6 +16,9 @@ const PAESI = [
   { nome: 'Francia', lat: 48.8, lng: 2.3, emoji: '🇫🇷' },
   { nome: 'UK', lat: 51.5, lng: -0.1, emoji: '🇬🇧' },
   { nome: 'Cina', lat: 39.9, lng: 116.4, emoji: '🇨🇳' },
+  { nome: 'Germania', lat: 52.5, lng: 13.4, emoji: '🇩🇪' },
+  { nome: 'Brasile', lat: -15.8, lng: -47.9, emoji: '🇧🇷' },
+  { nome: 'India', lat: 28.6, lng: 77.2, emoji: '🇮🇳' },
 ];
 
 function Mappa({ onPaeseSelezionato, paeseAttivo }) {

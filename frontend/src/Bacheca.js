@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Bacheca({ paese }) {
+function Bacheca({ paese, aggiornato }) {
   const [notizie, setNotizie] = useState([]);
   const [caricamento, setCaricamento] = useState(true);
 
@@ -20,7 +20,7 @@ function Bacheca({ paese }) {
         console.error(err);
         setCaricamento(false);
       });
-  }, [paese]);
+  }, [paese, aggiornato]);
 
   if (caricamento) return <p>Caricamento...</p>;
 

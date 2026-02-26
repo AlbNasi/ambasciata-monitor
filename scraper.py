@@ -6,6 +6,9 @@ AMBASCIATE = {
     "Francia": "https://ambparigi.esteri.it/it/news/",
     "UK": "https://amblondra.esteri.it/it/news/",
     "Cina": "https://ambpechino.esteri.it/it/news/",
+    "Germania": "https://ambberlino.esteri.it/it/news/",
+    "Brasile": "https://ambbrasilia.esteri.it/it/news/",
+    "India": "https://ambnewdelhi.esteri.it/it/news/",
 }
 
 def scrape_ambasciata(paese, url):
