@@ -19,6 +19,11 @@ const PAESI = [
   { nome: 'Germania', lat: 52.5, lng: 13.4, emoji: '🇩🇪' },
   { nome: 'Brasile', lat: -15.8, lng: -47.9, emoji: '🇧🇷' },
   { nome: 'India', lat: 28.6, lng: 77.2, emoji: '🇮🇳' },
+  { nome: 'Giappone', lat: 35.7, lng: 139.7, emoji: '🇯🇵' },
+  { nome: 'Australia', lat: -35.3, lng: 149.1, emoji: '🇦🇺' },
+  { nome: 'Arabia Saudita', lat: 24.7, lng: 46.7, emoji: '🇸🇦' },
+  { nome: 'Egitto', lat: 30.1, lng: 31.2, emoji: '🇪🇬' },
+  { nome: 'Sudafrica', lat: -25.7, lng: 28.2, emoji: '🇿🇦' },
 ];
 
 function Mappa({ onPaeseSelezionato, paeseAttivo }) {
