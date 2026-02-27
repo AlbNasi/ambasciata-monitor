@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Bacheca({ paese, aggiornato }) {
+function Bacheca({ paese, aggiornato, dal, al }) {
   const [notizie, setNotizie] = useState([]);
   const [caricamento, setCaricamento] = useState(true);
 
   useEffect(() => {
     setCaricamento(true);
-    const url = paese
-      ? `http://127.0.0.1:8000/news?paese=${paese}`
-      : `http://127.0.0.1:8000/news`;
+    let url = `http://127.0.0.1:8000/news?`;
+    if (paese) url += `paese=${paese}&`;
+    if (dal) url += `dal=${dal}&`;
+    if (al) url += `al=${al}&`;
 
     axios.get(url)
       .then(res => {
@@ -20,7 +21,7 @@ function Bacheca({ paese, aggiornato }) {
         console.error(err);
         setCaricamento(false);
       });
-  }, [paese, aggiornato]);
+  }, [paese, aggiornato, dal, al]);
 
   if (caricamento) return <p>Caricamento...</p>;
 

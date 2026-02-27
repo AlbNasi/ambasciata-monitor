@@ -19,14 +19,14 @@ def startup():
     init_db()
 
 @app.get("/news")
-def get_news(paese: str = None):
-    """Restituisce tutte le notizie, o solo quelle di un paese."""
-    notizie = leggi_notizie(paese)
+def get_news(paese: str = None, dal: str = None, al: str = None):
+    """Restituisce le notizie filtrate per paese e/o periodo."""
+    notizie = leggi_notizie(paese=paese, dal=dal, al=al)
     return {"totale": len(notizie), "notizie": notizie}
 
 @app.post("/scrape")
 def scrape():
-    """Lancia lo scraping e salva le nuove notizie."""
+    from database import salva_notizie_con_conteggio
     notizie = scrape_tutte()
-    salva_notizie(notizie)
-    return {"messaggio": "Scraping completato", "articoli_trovati": len(notizie)}
+    nuove = salva_notizie_con_conteggio(notizie)
+    return {"messaggio": "Scraping completato", "articoli_nuovi": nuove}

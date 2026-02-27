@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Bacheca from './Bacheca';
 import Mappa from './Mappa';
+import FiltroPeriodo from './FiltroPeriodo';
 import axios from 'axios';
 
 function App() {
   const [paeseSelezionato, setPaeseSelezionato] = useState(null);
   const [aggiornamento, setAggiornamento] = useState(null);
   const [caricamento, setCaricamento] = useState(false);
+  const [periodo, setPeriodo] = useState({ dal: null, al: null });
 
   const aggiorna = () => {
     setCaricamento(true);
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <div>
+      {/* Header */}
       <div style={{
         padding: '15px 20px',
         borderBottom: '1px solid #ddd',
@@ -33,30 +36,39 @@ function App() {
         justifyContent: 'space-between'
       }}>
         <h1 style={{ margin: 0 }}>🇮🇹 Ambasciata Monitor</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <button
-            onClick={aggiorna}
-            disabled={caricamento}
-            style={{
-              padding: '8px 16px',
-              cursor: caricamento ? 'not-allowed' : 'pointer',
-              backgroundColor: 'white',
-              color: caricamento ? '#999' : '#2e9e6b',
-              border: `2px solid ${caricamento ? '#ccc' : '#2e9e6b'}`,
-              borderRadius: '4px',
-              fontSize: '0.95em'
-            }}
-          >
-            {caricamento ? '⏳ Aggiornamento...' : aggiornamento ? aggiornamento : '🔄 Aggiorna notizie'}
-          </button>
-        </div>
+        <button
+          onClick={aggiorna}
+          disabled={caricamento}
+          style={{
+            padding: '8px 16px',
+            cursor: caricamento ? 'not-allowed' : 'pointer',
+            backgroundColor: 'white',
+            color: caricamento ? '#999' : '#2e9e6b',
+            border: `2px solid ${caricamento ? '#ccc' : '#2e9e6b'}`,
+            borderRadius: '4px',
+            fontSize: '0.95em'
+          }}
+        >
+          {caricamento ? '⏳ Aggiornamento...' : aggiornamento ? aggiornamento : '🔄 Aggiorna notizie'}
+        </button>
       </div>
 
+      {/* Filtro periodo */}
+      <div style={{
+        padding: '12px 20px',
+        borderBottom: '1px solid #eee',
+        backgroundColor: '#fafafa'
+      }}>
+        <FiltroPeriodo onFiltra={setPeriodo} />
+      </div>
+
+      {/* Mappa */}
       <Mappa
         onPaeseSelezionato={setPaeseSelezionato}
         paeseAttivo={paeseSelezionato}
       />
 
+      {/* Bottone reset paese */}
       {paeseSelezionato && (
         <button
           onClick={() => setPaeseSelezionato(null)}
@@ -74,7 +86,13 @@ function App() {
         </button>
       )}
 
-      <Bacheca paese={paeseSelezionato} aggiornato={aggiornamento} />
+      {/* Bacheca */}
+      <Bacheca
+        paese={paeseSelezionato}
+        aggiornato={aggiornamento}
+        dal={periodo.dal}
+        al={periodo.al}
+      />
     </div>
   );
 }

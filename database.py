@@ -68,15 +68,47 @@ def salva_notizie(notizie):
     conn.close()
     print(f"  → {nuove} nuove notizie salvate (duplicati ignorati)")
 
-def leggi_notizie(paese=None):
+def salva_notizie_con_conteggio(notizie):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    nuove = 0
+    for n in notizie:
+        try:
+            c.execute("""
+                INSERT INTO notizie (paese, titolo, data, data_iso, testo, link, salvato_il)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                n["paese"], n["titolo"], n["data"],
+                converti_data(n["data"]), n["testo"],
+                n["link"], datetime.now().isoformat()
+            ))
+            nuove += 1
+        except sqlite3.IntegrityError:
+            pass
+    conn.commit()
+    conn.close()
+    return nuove
+
+def leggi_notizie(paese=None, dal=None, al=None):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
+    query = "SELECT * FROM notizie WHERE 1=1"
+    params = []
+
     if paese:
-        c.execute("SELECT * FROM notizie WHERE paese = ? ORDER BY data_iso DESC", (paese,))
-    else:
-        c.execute("SELECT * FROM notizie ORDER BY data_iso DESC")
+        query += " AND paese = ?"
+        params.append(paese)
+    if dal:
+        query += " AND data_iso >= ?"
+        params.append(dal)
+    if al:
+        query += " AND data_iso <= ?"
+        params.append(al)
+
+    query += " ORDER BY data_iso DESC"
+    c.execute(query, params)
 
     risultati = [dict(row) for row in c.fetchall()]
     conn.close()
